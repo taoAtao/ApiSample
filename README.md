@@ -26,6 +26,7 @@ Eureka->*-service->fegin->zuul
 Post：
 
 localhost:2222/log/queryInfo;请求参数：name 
+
 localhost:2222/alarm/queryInfo;请求参数：name 
 
 Delete：
