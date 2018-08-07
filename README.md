@@ -19,18 +19,17 @@ fegin: 2222
 
 
 运行顺序：
-Eureka->*-service->fegin->zuul
+Eureka->(log/alarm)-service->fegin->zuul
 
 验证调用接口（postman）：
 
 Post：
 
-localhost:2222/log/queryInfo;请求参数：name 
-
-localhost:2222/alarm/queryInfo;请求参数：name 
+localhost:8000/log/queryInfo;请求参数：name 
+localhost:8000/alarm/queryInfo;请求参数：name 
 
 Delete：
 
-localhost:2222/log/delete?name=1
+localhost:8000/log/delete?name=1
 
-localhost:2222/alarm/delete?name=1
+localhost:8000/alarm/delete?name=1

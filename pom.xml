@@ -13,6 +13,8 @@
         <module>LogService</module>
         <module>AlarmService</module>
         <module>FeginConsumer</module>
+        <module>ConfigServer</module>
+        <module>ZuulServer</module>
     </modules>
 
     <properties>
@@ -41,6 +43,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka-server</artifactId>
