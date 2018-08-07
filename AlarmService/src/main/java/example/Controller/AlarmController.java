@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AlarmController {
 
-    @PostMapping(value = "/alarm/queryInfo")
+    @PostMapping(value = "/queryInfo")
     public String queryInfo(@RequestParam("name") String name) {
         return "根据Name返回Alarm："+name;
     }
     
-    @DeleteMapping(value = "/alarm/delete")
+    @DeleteMapping(value = "/delete")
     public String deleteInfo(@RequestParam("name") String name) {
         return "根据Name删除Alarm："+name;
     }

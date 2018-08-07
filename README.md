@@ -20,7 +20,7 @@ fegin: 2222
 zuul：8000
 
 运行顺序：
-Eureka->(log/alarm)-service->fegin->zuul
+Eureka->(log/alarm)-service->zuul
 
 验证调用接口（postman）：
 
