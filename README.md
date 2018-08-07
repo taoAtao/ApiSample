@@ -17,6 +17,7 @@ alarm-service:8002
 
 fegin: 2222
 
+zuul：8000
 
 运行顺序：
 Eureka->(log/alarm)-service->fegin->zuul
