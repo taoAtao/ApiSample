@@ -9,8 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>log-service</artifactId>
-
+    <artifactId>fegin-consumer</artifactId>
+    <dependencies>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-feign</artifactId>
+    </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -19,6 +24,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

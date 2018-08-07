@@ -2,7 +2,9 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AlarmService" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EruekaServer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FeginConsumer" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/LogService" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

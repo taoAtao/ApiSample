@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>log-service</artifactId>
+    <artifactId>alarm-service</artifactId>
 
     <build>
         <plugins>
@@ -19,6 +19,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
