@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class CustomZuulConfig {
 
     @Autowired ZuulProperties zuulProperties;
+
     @Autowired
     ServerProperties server;
     @Autowired

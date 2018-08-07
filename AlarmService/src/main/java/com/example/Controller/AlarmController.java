@@ -1,4 +1,4 @@
-package example.Controller;
+package com.example.Controller;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
