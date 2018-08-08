@@ -1,4 +1,4 @@
-package com.gateway.rip.event;
+package com.gateway.routeLocator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.RoutesRefreshedEvent;

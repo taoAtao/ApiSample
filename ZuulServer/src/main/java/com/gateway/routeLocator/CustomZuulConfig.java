@@ -1,6 +1,6 @@
-package com.gateway.rip.config;
+package com.gateway.routeLocator;
 
-import com.gateway.rip.routelocator.CustomRouteLocator;
+import com.gateway.routeLocator.CustomRouteLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;

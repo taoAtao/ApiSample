@@ -1,4 +1,4 @@
-package com.gateway.rip.routelocator;
+package com.gateway.models;
 
 /**
  * Created by xiangt on 2018/8/8. 

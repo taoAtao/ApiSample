@@ -1,6 +1,6 @@
-package com.gateway.rip.web;
+package com.gateway.controller;
 
-import com.gateway.rip.event.RefreshRouteService;
+import com.gateway.routeLocator.RefreshRouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.web.ZuulHandlerMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

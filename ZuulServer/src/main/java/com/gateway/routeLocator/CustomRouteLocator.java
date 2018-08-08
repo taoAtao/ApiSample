@@ -1,5 +1,6 @@
-package com.gateway.rip.routelocator;
+package com.gateway.routeLocator;
 
+import com.gateway.models.ZuulRouteVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.netflix.zuul.filters.RefreshableRouteLocator;
