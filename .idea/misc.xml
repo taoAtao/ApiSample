@@ -13,7 +13,6 @@
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/ConfigServer/pom.xml" />
         <option value="$PROJECT_DIR$/EruekaServer/pom.xml" />
         <option value="$PROJECT_DIR$/FeginConsumer/pom.xml" />
       </set>

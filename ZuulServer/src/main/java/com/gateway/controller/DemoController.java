@@ -6,6 +6,7 @@ import org.springframework.cloud.netflix.zuul.web.ZuulHandlerMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -14,7 +15,8 @@ import java.util.Map;
 @RestController
 public class DemoController {
 
-    @Autowired RefreshRouteService refreshRouteService;
+    @Autowired
+    RefreshRouteService refreshRouteService;
 
     @RequestMapping("/refreshRoute")
     public String refreshRoute(){
@@ -29,7 +31,7 @@ public class DemoController {
     public String watchNowRoute(){
         //可以用debug模式看里面具体是什么
         Map<String, Object> handlerMap = zuulHandlerMapping.getHandlerMap();
-        return "watchNowRoute";
+        return String.valueOf(handlerMap);
     }
 
 
