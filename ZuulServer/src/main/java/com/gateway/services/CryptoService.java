@@ -73,4 +73,19 @@ public class CryptoService {
         }
         return result;
     }
+
+    public String getUsernameByToken(String token){
+        String firstDecodeStr =null;
+        try {
+            firstDecodeStr = base64Decode(token, defaultCharSet);
+        }
+        catch (Exception e){
+            return null;
+        }
+        if(firstDecodeStr!=null&&firstDecodeStr.indexOf(":")>0){
+
+            return firstDecodeStr.split(":")[0].trim();
+        }
+        return null;
+    }
 }
