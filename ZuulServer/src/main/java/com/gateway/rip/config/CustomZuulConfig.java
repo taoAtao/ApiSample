@@ -16,14 +16,14 @@ public class CustomZuulConfig {
 
     @Autowired ZuulProperties zuulProperties;
 
-    @Autowired
-    ServerProperties server;
+    @Autowired ServerProperties server;
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @Bean
     public CustomRouteLocator routeLocator() {
-        CustomRouteLocator routeLocator = new CustomRouteLocator(this.server.getServerHeader(), this.zuulProperties);
+        CustomRouteLocator routeLocator = new CustomRouteLocator(this.server.getServlet().getServletPrefix(), this.zuulProperties);
         routeLocator.setJdbcTemplate(jdbcTemplate);
         return routeLocator;
     }
