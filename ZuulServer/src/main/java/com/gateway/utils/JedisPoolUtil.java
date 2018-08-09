@@ -30,11 +30,13 @@ public class JedisPoolUtil {
         //创建具有分片功能的的Jedis连接池
         shardedJedisPool = new ShardedJedisPool(config, list);
     }
+
     public static ShardedJedisPool getShardedJedisPool() {
         return shardedJedisPool;
     }
+
     public static void main(String[] args) {
         ShardedJedis jedis = JedisPoolUtil.getShardedJedisPool().getResource();
-        
+
     }
 }

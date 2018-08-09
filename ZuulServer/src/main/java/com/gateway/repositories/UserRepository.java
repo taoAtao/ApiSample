@@ -14,6 +14,6 @@ import java.util.List;
  */
 @Repository
 //@Transactional
-public interface UserRepository extends JpaRepository<User,Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
     public List<User> getByName(String name);
 }

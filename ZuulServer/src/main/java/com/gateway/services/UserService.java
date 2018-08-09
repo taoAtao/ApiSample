@@ -22,11 +22,10 @@ public class UserService {
     }
 
     public boolean insertUser(User user) {
-        try{
+        try {
             userRepository.saveAndFlush(user);
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -37,11 +36,10 @@ public class UserService {
     }
 
     public boolean deleteUser(User user) {
-        try{
+        try {
             userRepository.delete(user);
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

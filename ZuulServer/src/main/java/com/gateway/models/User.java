@@ -17,21 +17,21 @@ import java.io.Serializable;
  */
 //@Component("user")
 @Entity
-@Table(name="user")
+@Table(name = "user")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Component
 @Scope("prototype")
 @Getter
 @Setter
-public class User implements Serializable{
+public class User implements Serializable {
     @Id
-    @Column(name="ID",length = 10)
+    @Column(name = "ID", length = 10)
     private int id;
 
-    @Column(name="name",length = 20)
+    @Column(name = "name", length = 20)
     private String name;
 
-    @Column(name="password",length = 20)
+    @Column(name = "password", length = 20)
     private String password;
 
     public int getId() {

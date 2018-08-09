@@ -11,12 +11,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories("com.gateway.repositories")
 @EntityScan({"com.gateway.models"})
-@ComponentScan({"com.gateway.filters","com.gateway.services", "com.gateway" })
+@ComponentScan({"com.gateway.filters", "com.gateway.services", "com.gateway"})
 @SpringBootApplication
 public class ApiGatewayApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiGatewayApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ApiGatewayApplication.class, args);
+    }
 
 }
