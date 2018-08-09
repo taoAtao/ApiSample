@@ -12,108 +12,109 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by xiangt on 2018/8/8. 
+ * Created by xiangt on 2018/8/8.
  */
 @Entity
-@Table(name="gateway_api_define")
+@Table(name = "gateway_api_define")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Component
 @Scope("prototype")
 
 public class ZuulRoute {
 
-	/**
-	 * 路由id.
-	 */
-	@Id
-	private String id;
+    /**
+     * 路由id.
+     */
+    @Id
+    private String id;
 
-	/**
-	 * 路由路径.
-	 */
-	private String path;
+    /**
+     * 路由路径.
+     */
+    private String path;
 
-	/**
-	 * 服务名称
-	 */
-	@Column(name="service_id")
-	private String serviceId;
+    /**
+     * 服务名称
+     */
+    @Column(name = "service_id")
+    private String serviceId;
 
-	/**
-	 * url.
-	 */
-	private String url;
+    /**
+     * url.
+     */
+    private String url;
 
-	@Column(name="api_name")
-	private String apiName;
+    @Column(name = "api_name")
+    private String apiName;
 
-	@Column(name="enabled")
-	private int enabled;
+    @Column(name = "enabled")
+    private int enabled;
 
-	private int retryable = 0;
+    private int retryable = 0;
 
-	@Column(name="strip_prefix")
-	private int stripPrefix = 1;
-	public String getApiName() {
-		return apiName;
-	}
+    @Column(name = "strip_prefix")
+    private int stripPrefix = 1;
 
-	public void setApiName(String apiName) {
-		this.apiName = apiName;
-	}
+    public String getApiName() {
+        return apiName;
+    }
 
-	public int getEnabled() {
-		return enabled;
-	}
+    public void setApiName(String apiName) {
+        this.apiName = apiName;
+    }
 
-	public int getRetryable() {
-		return retryable;
-	}
+    public int getEnabled() {
+        return enabled;
+    }
 
-	public int getStripPrefix() {
-		return stripPrefix;
-	}
+    public int getRetryable() {
+        return retryable;
+    }
 
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
-	}
+    public int getStripPrefix() {
+        return stripPrefix;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public String getServiceId() {
-		return serviceId;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public void setServiceId(String serviceId) {
-		this.serviceId = serviceId;
-	}
+    public String getServiceId() {
+        return serviceId;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
 
-
-	@Override public String toString() {
-		return "ZuulRoute{" + "id='" + id + '\'' + ", path='" + path + '\'' + ", serviceId='" + serviceId + '\''
-				+ ", url='" + url + '\'' + ", apiName='" + apiName + '\'' + ", enabled=" + enabled + '}';
-	}
+    @Override
+    public String toString() {
+        return "ZuulRoute{" + "id='" + id + '\'' + ", path='" + path + '\'' + ", serviceId='" + serviceId + '\''
+                + ", url='" + url + '\'' + ", apiName='" + apiName + '\'' + ", enabled=" + enabled + '}';
+    }
 }

@@ -13,13 +13,13 @@ import java.util.Map;
  * Created by xiangt on 2018/8/7.
  */
 @RestController
-public class DemoController {
+public class RefreshController {
 
     @Autowired
     RefreshRouteService refreshRouteService;
 
     @RequestMapping("/refreshRoute")
-    public String refreshRoute(){
+    public String refreshRoute() {
         refreshRouteService.refreshRoute();
         return "refreshRoute";
     }
@@ -28,12 +28,9 @@ public class DemoController {
     ZuulHandlerMapping zuulHandlerMapping;
 
     @RequestMapping("/watchNowRoute")
-    public String watchNowRoute(){
+    public String watchNowRoute() {
         //可以用debug模式看里面具体是什么
         Map<String, Object> handlerMap = zuulHandlerMapping.getHandlerMap();
         return String.valueOf(handlerMap);
     }
-
-
-
 }

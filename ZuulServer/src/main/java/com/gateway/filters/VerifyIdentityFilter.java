@@ -21,7 +21,7 @@ import java.util.List;
 @Component
 public class VerifyIdentityFilter extends ZuulFilter {
 
-    private final Logger logger= LoggerFactory.getLogger(VerifyIdentityFilter.class);
+    private final Logger logger = LoggerFactory.getLogger(VerifyIdentityFilter.class);
 
     @Autowired
     private UserService userService;
@@ -43,99 +43,94 @@ public class VerifyIdentityFilter extends ZuulFilter {
         return true;
     }
 
-    public Object run(){
+    public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        HttpServletResponse response=ctx.getResponse();
-        if(request.getMethod().equals("OPTIONS")){
+        HttpServletResponse response = ctx.getResponse();
+        if (request.getMethod().equals("OPTIONS")) {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
             response.setHeader("Access-Control-Max-Age", "3600");
             response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Token,DateHeader");
-            response.setHeader("Content-Type","Origin, X-Requested-With, Content-Type, Accept");
+            response.setHeader("Content-Type", "Origin, X-Requested-With, Content-Type, Accept");
             ctx.setSendZuulResponse(false);
             return null;
         }
-        String dateStr=request.getHeader("DateHeader");
-        if(dateStr==null || dateStr.length()<=0){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"Request Header Must Contain Date");
+        String dateStr = request.getHeader("DateHeader");
+        if (dateStr == null || dateStr.length() <= 0) {
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "Request Header Must Contain Date");
             return null;
         }
-        try{
-            long date=Long.parseLong(dateStr);
-            if(Math.abs(System.currentTimeMillis()-date)>900000){
-                sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"Request Time Error");
+        try {
+            long date = Long.parseLong(dateStr);
+            if (Math.abs(System.currentTimeMillis() - date) > 900000) {
+                sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "Request Time Error");
                 return null;
             }
-        }catch (NumberFormatException e){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"Date Error");
+        } catch (NumberFormatException e) {
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "Date Error");
             return null;
         }
-        String token=request.getHeader("Token");
-        if(token==null||token.length()<=0){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"Request Header Must Contain Token");
+        String token = request.getHeader("Token");
+        if (token == null || token.length() <= 0) {
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "Request Header Must Contain Token");
             return null;
         }
-        if(!verifyToken(token,dateStr)){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"Verify Error");
+        if (!verifyToken(token, dateStr)) {
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "Verify Error");
         }
         return null;
     }
 
-    private void sendError(RequestContext ctx,HttpServletResponse response,int responseStatu,String message){
-        try{
-            response.sendError(responseStatu,message);
+    private void sendError(RequestContext ctx, HttpServletResponse response, int responseStatu, String message) {
+        try {
+            response.sendError(responseStatu, message);
             ctx.setSendZuulResponse(false);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             logger.error(e.getMessage());
         }
     }
 
-    private boolean verifyToken(String token,String dateStr){
-        String username=null;
-        String decodeInfoString=null;
-        String[] tokenDetail=null;
-        if(cryptoService!=null){
+    private boolean verifyToken(String token, String dateStr) {
+        String username = null;
+        String decodeInfoString = null;
+        String[] tokenDetail = null;
+        if (cryptoService != null) {
             try {
                 decodeInfoString = cryptoService.base64Decode(token);
-                if(decodeInfoString!=null&&decodeInfoString.indexOf(":")>0){
-                    tokenDetail=decodeInfoString.split(":");
-                    if(tokenDetail.length!=2) {
+                if (decodeInfoString != null && decodeInfoString.indexOf(":") > 0) {
+                    tokenDetail = decodeInfoString.split(":");
+                    if (tokenDetail.length != 2) {
                         return false;
                     }
-                }
-                else{
+                } else {
                     return false;
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 return false;
             }
         }
-        User user=null;
-        List userlist=null;
-        if(userService!=null){
-            userlist=userService.getUserByName(tokenDetail[0]);
-            if(userlist==null||userlist.size()!=1){
+        User user = null;
+        List userlist = null;
+        if (userService != null) {
+            userlist = userService.getUserByName(tokenDetail[0]);
+            if (userlist == null || userlist.size() != 1) {
                 return false;
             }
             try {
                 user = (User) userlist.get(0);
-            }
-            catch(ClassCastException e){
+            } catch (ClassCastException e) {
                 return false;
             }
         }
-        if(user==null){
+        if (user == null) {
             return false;
         }
         try {
-            if(cryptoService.base64Encode(cryptoService.hmacsha1Encode(dateStr, user.getPassword())).equals(tokenDetail[1])){
+            if (cryptoService.base64Encode(cryptoService.hmacsha1Encode(dateStr, user.getPassword())).equals(tokenDetail[1])) {
                 return true;
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
         return false;

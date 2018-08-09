@@ -11,11 +11,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories("com.configServer.repository")
 @EntityScan({"com.configServer.model"})
-@ComponentScan({"com.configServer" })
+@ComponentScan({"com.configServer"})
 @SpringBootApplication
 public class ConfigServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ConfigServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigServerApplication.class, args);
+    }
 }

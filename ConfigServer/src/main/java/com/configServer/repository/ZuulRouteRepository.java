@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ZuulRouteRepository extends JpaRepository<ZuulRoute,Integer> {
+public interface ZuulRouteRepository extends JpaRepository<ZuulRoute, Integer> {
 
 
 }

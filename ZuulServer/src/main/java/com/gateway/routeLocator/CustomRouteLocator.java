@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by xiangt on 2018/8/7.
  */
-public class CustomRouteLocator extends SimpleRouteLocator implements RefreshableRouteLocator{
+public class CustomRouteLocator extends SimpleRouteLocator implements RefreshableRouteLocator {
 
     public final static Logger logger = LoggerFactory.getLogger(CustomRouteLocator.class);
 
@@ -26,14 +26,14 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
 
     private ZuulProperties properties;
 
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public CustomRouteLocator(String servletPath, ZuulProperties properties) {
         super(servletPath, properties);
         this.properties = properties;
-        logger.info("servletPath:{}",servletPath);
+        logger.info("servletPath:{}", servletPath);
 
     }
 
@@ -68,20 +68,20 @@ public class CustomRouteLocator extends SimpleRouteLocator implements Refreshabl
         return values;
     }
 
-    private Map<String, ZuulRoute> locateRoutesFromDB(){
+    private Map<String, ZuulRoute> locateRoutesFromDB() {
         Map<String, ZuulRoute> routes = new LinkedHashMap<>();
-        List<ZuulRouteVO> results = jdbcTemplate.query("select * from gateway_api_define where enabled = true ",new BeanPropertyRowMapper<>(ZuulRouteVO.class));
+        List<ZuulRouteVO> results = jdbcTemplate.query("select * from gateway_api_define where enabled = true ", new BeanPropertyRowMapper<>(ZuulRouteVO.class));
         for (ZuulRouteVO result : results) {
-            if(org.apache.commons.lang3.StringUtils.isBlank(result.getPath()) || org.apache.commons.lang3.StringUtils.isBlank(result.getUrl()) ){
+            if (org.apache.commons.lang3.StringUtils.isBlank(result.getPath()) || org.apache.commons.lang3.StringUtils.isBlank(result.getUrl())) {
                 continue;
             }
             ZuulRoute zuulRoute = new ZuulRoute();
             try {
-                org.springframework.beans.BeanUtils.copyProperties(result,zuulRoute);
+                org.springframework.beans.BeanUtils.copyProperties(result, zuulRoute);
             } catch (Exception e) {
-                logger.error("=============load zuul route info from db with error==============",e);
+                logger.error("=============从数据库加载路由器信息错误==============", e);
             }
-            routes.put(zuulRoute.getPath(),zuulRoute);
+            routes.put(zuulRoute.getPath(), zuulRoute);
         }
         return routes;
     }

@@ -15,14 +15,14 @@ import java.util.List;
 @ConfigurationProperties(prefix = "front")
 public class ServersConfig {
 
-	List<Server> servers = new ArrayList<>();
+    List<Server> servers = new ArrayList<>();
 
-	public List<Server> getServers() {
-		return servers;
-	}
+    public List<Server> getServers() {
+        return servers;
+    }
 
-	public void setServers(List<Server> servers) {
-		this.servers = servers;
-	}
+    public void setServers(List<Server> servers) {
+        this.servers = servers;
+    }
 }
 

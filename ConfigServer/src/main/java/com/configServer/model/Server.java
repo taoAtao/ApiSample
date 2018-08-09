@@ -3,26 +3,26 @@ package com.configServer.model;
 import javax.persistence.Entity;
 
 /**
- * Created by xiangt on 2018/8/8. 
+ * Created by xiangt on 2018/8/8.
  */
 
-public class Server{
-		private String name;
-		private String url;
+public class Server {
+    private String name;
+    private String url;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

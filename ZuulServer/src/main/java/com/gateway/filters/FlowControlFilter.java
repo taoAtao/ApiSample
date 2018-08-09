@@ -27,7 +27,7 @@ import java.util.Map;
 @Component
 public class FlowControlFilter extends ZuulFilter {
 
-    private static final Logger logger= LoggerFactory.getLogger(FlowControlFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(FlowControlFilter.class);
 
     @Autowired
     private UserService userService;
@@ -54,23 +54,24 @@ public class FlowControlFilter extends ZuulFilter {
 
     /**
      * 对某个键的值自增
-     * @param key 键
+     *
+     * @param key          键
      * @param cacheSeconds 超时时间，0为不超时
      * @return
      */
-    private  long setIncr(String key, int cacheSeconds) {
+    private long setIncr(String key, int cacheSeconds) {
         long result = 0;
         ShardedJedis jedis = null;
         try {
             jedis = pool.getResource();
-            result =jedis.incr(key);
-            if(result == 1){
+            result = jedis.incr(key);
+            if (result == 1) {
                 jedis.expire(key, cacheSeconds);
             }
             //System.out.println("当前计数:" + jedis.get(key).toString());
-            logger.debug("set "+ key + " = " + result);
+            logger.debug("set " + key + " = " + result);
         } catch (Exception e) {
-            logger.warn("set "+ key + " = " + result);
+            logger.warn("set " + key + " = " + result);
         } finally {
             //jedisPool.returnResource(jedis);
             jedis.close();
@@ -80,15 +81,16 @@ public class FlowControlFilter extends ZuulFilter {
 
     /**
      * 是否拒绝服务
+     *
      * @param key
      * @param cacheSeconds key存活时间
-     * @param num 阈值，超过该值拒绝服务
+     * @param num          阈值，超过该值拒绝服务
      * @return
      */
-    private boolean denialOfService(String key, int cacheSeconds, int num){
+    private boolean denialOfService(String key, int cacheSeconds, int num) {
         long count = 0;
         count = setIncr(key, cacheSeconds);
-        if(count <= num){
+        if (count <= num) {
             return false;
         }
         return true;
@@ -96,10 +98,11 @@ public class FlowControlFilter extends ZuulFilter {
 
     /**
      * 根据key返回配置信息
+     *
      * @param key
      * @return
      */
-    private Map<String, String> getConfFromRedis(String key){
+    private Map<String, String> getConfFromRedis(String key) {
         Map<String, String> map = new HashMap<>();
         ShardedJedis jedis = null;
         try {
@@ -107,78 +110,76 @@ public class FlowControlFilter extends ZuulFilter {
             map = jedis.hgetAll(key);
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             jedis.close();
         }
         return map;
     }
 
-    public Object run(){
+    public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        HttpServletResponse response=ctx.getResponse();
-        if(request.getMethod().equals("OPTIONS")){
+        HttpServletResponse response = ctx.getResponse();
+        if (request.getMethod().equals("OPTIONS")) {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
             response.setHeader("Access-Control-Max-Age", "3600");
             response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Token,DateHeader");
-            response.setHeader("Content-Type","Origin, X-Requested-With, Content-Type, Accept");
+            response.setHeader("Content-Type", "Origin, X-Requested-With, Content-Type, Accept");
             ctx.setSendZuulResponse(false);
             return null;
         }
-        String token=request.getHeader("Token");
-        if(token==null||token.length()<=0){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"Request Header Must Contain Token");
+        String token = request.getHeader("Token");
+        if (token == null || token.length() <= 0) {
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "Request Header Must Contain Token");
             return null;
         }
         String userName = cryptoService.getUsernameByToken(token);
-        if(userName == null){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"Request must contain user");
+        if (userName == null) {
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "Request must contain user");
             return null;
         }
         String uri = request.getRequestURI();
         uri = uri.trim();
-        Map<String, String> apiConf = getConfFromRedis(uri+"@flowcontrol");
+        Map<String, String> apiConf = getConfFromRedis(uri + "@flowcontrol");
         Boolean isDenialApi = true;
-        if(apiConf.size() < 2){
+        if (apiConf.size() < 2) {
             //isDenialApi = denialOfService(uri, 300, 50);
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"No configuration information for API");
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "No configuration information for API");
             return null;
-        }else{
+        } else {
             Integer time = Integer.parseInt(apiConf.get("time"));
             Integer threshold = Integer.parseInt(apiConf.get("threshold"));
             isDenialApi = denialOfService(uri, time, threshold);
         }
         userName = userName.trim();
-        Map<String, String> userConf = getConfFromRedis(userName+"@flowcontrol");
+        Map<String, String> userConf = getConfFromRedis(userName + "@flowcontrol");
         Boolean isDenialUser = true;
-        if(userConf.size() < 2){
+        if (userConf.size() < 2) {
             //isDenialApi = denialOfService(userName, 300, 50);
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"No configuration information for API");
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "No configuration information for API");
             return null;
-        }else{
+        } else {
             Integer time = Integer.parseInt(userConf.get("time"));
             Integer threshold = Integer.parseInt(userConf.get("threshold"));
             isDenialUser = denialOfService(userName, time, threshold);
         }
-        if(isDenialUser || isDenialApi){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"flow control");
+        if (isDenialUser || isDenialApi) {
+            sendError(ctx, response, HttpServletResponse.SC_BAD_REQUEST, "flow control");
             return null;
         }
         return true;
     }
 
 
-    private void sendError(RequestContext ctx,HttpServletResponse response,int responseStatu,String message){
-        try{
-            response.sendError(responseStatu,message);
+    private void sendError(RequestContext ctx, HttpServletResponse response, int responseStatu, String message) {
+        try {
+            response.sendError(responseStatu, message);
             ctx.setSendZuulResponse(false);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             logger.error(e.getMessage());
         }
     }
-
 
 
 }
