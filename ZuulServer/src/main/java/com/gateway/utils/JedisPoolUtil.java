@@ -1,5 +1,7 @@
 package com.gateway.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.*;
 
 import java.util.LinkedList;
@@ -8,9 +10,15 @@ import java.util.List;
 /**
  * Created by pengns on 2018/8/8.
  */
+@Component
 public class JedisPoolUtil {
 
     private static ShardedJedisPool shardedJedisPool;
+    @Value("${redis.host}")
+    private static String host;
+
+    @Value("${redis.port}")
+    private static int port;
 
     // 静态代码初始化池配置
     static {
@@ -24,7 +32,7 @@ public class JedisPoolUtil {
         config.setMaxWaitMillis(5);
         config.setTestOnBorrow(true);
         config.setTestOnReturn(true);
-        //创建四个redis服务实例，并封装在list中
+        //创建redis服务实例，并封装在list中
         List<JedisShardInfo> list = new LinkedList<JedisShardInfo>();
         list.add(new JedisShardInfo("10.8.228.213", 6379));
         //创建具有分片功能的的Jedis连接池
