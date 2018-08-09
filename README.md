@@ -3,7 +3,9 @@ api网关测试
 
 基于spring cloud 的api网关
 
-Spring cloud 版本:2.0.3.RELEASE
+Spring Boot 版本:2.0.3.RELEASE
+
+Spring Cloud 版本：Finchley.RELEASE
 
 端口信息：
 
