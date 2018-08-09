@@ -16,12 +16,16 @@ public class ZuulRouteService {
     @Autowired
     private ZuulRouteRepository zuulRouteRepository;
 
+    @Autowired
+    ApiRefreshService apiRefreshService;
+
     public List<ZuulRoute> getAllZuulRoute() {
         return zuulRouteRepository.findAll();
     }
 
     public String addZuulRoute(ZuulRoute zuulRoute) {
         zuulRouteRepository.save(zuulRoute);
+        apiRefreshService.refresh();
         return "true";
     }
 }

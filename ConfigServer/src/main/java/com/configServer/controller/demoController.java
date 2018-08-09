@@ -26,10 +26,19 @@ public class demoController {
         return zuulRouteService.getAllZuulRoute();
     }
 
-    //	@RequestMapping("/add")
-    //	public String addZuulRoute(){
-    //		ZuulRoute zuulRoute = new ZuulRoute("/aa","loacl","ad");
-    //		return zuulRouteService.addZuulRoute(zuulRoute);
+    @RequestMapping("/add")
+    public String addZuulRoute() {
+        ZuulRoute zuulRoute = new ZuulRoute();
+        zuulRoute.setId("alarm");
+        zuulRoute.setUrl("http://localhost:8002");
+        zuulRoute.setPath("/alarm/**");
+        zuulRoute.setServiceId("adasd");
+        zuulRoute.setApiName("alarm");
+        zuulRoute.setEnabled(true);
+        zuulRoute.setRetryable(false);
+        zuulRoute.setStripPrefix(true);
+        return zuulRouteService.addZuulRoute(zuulRoute);
+    }
 
     @RequestMapping("/refresh")
     public String refresh() {

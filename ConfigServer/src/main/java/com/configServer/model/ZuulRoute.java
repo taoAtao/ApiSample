@@ -1,15 +1,11 @@
 package com.configServer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by xiangt on 2018/8/8.
@@ -20,7 +16,7 @@ import javax.persistence.Table;
 @Component
 @Scope("prototype")
 
-public class ZuulRoute {
+public class ZuulRoute implements Serializable {
 
     /**
      * 路由id.
@@ -48,12 +44,36 @@ public class ZuulRoute {
     private String apiName;
 
     @Column(name = "enabled")
-    private int enabled;
+    private boolean enabled;
 
-    private int retryable = 0;
+    private boolean retryable ;
 
     @Column(name = "strip_prefix")
-    private int stripPrefix = 1;
+    private boolean stripPrefix ;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isRetryable() {
+        return retryable;
+    }
+
+    public void setRetryable(boolean retryable) {
+        this.retryable = retryable;
+    }
+
+    public boolean isStripPrefix() {
+        return stripPrefix;
+    }
+
+    public void setStripPrefix(boolean stripPrefix) {
+        this.stripPrefix = stripPrefix;
+    }
 
     public String getApiName() {
         return apiName;
@@ -61,22 +81,6 @@ public class ZuulRoute {
 
     public void setApiName(String apiName) {
         this.apiName = apiName;
-    }
-
-    public int getEnabled() {
-        return enabled;
-    }
-
-    public int getRetryable() {
-        return retryable;
-    }
-
-    public int getStripPrefix() {
-        return stripPrefix;
-    }
-
-    public void setEnabled(int enabled) {
-        this.enabled = enabled;
     }
 
     public String getId() {
@@ -110,7 +114,6 @@ public class ZuulRoute {
     public void setUrl(String url) {
         this.url = url;
     }
-
 
     @Override
     public String toString() {
