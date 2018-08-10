@@ -85,6 +85,7 @@ public class VerifyIdentityFilter extends ZuulFilter {
     private void sendError(RequestContext ctx, HttpServletResponse response, int responseStatu, String message) {
         try {
             response.sendError(responseStatu, message);
+            ctx.set("enableFilter",false);
             ctx.setSendZuulResponse(false);
         } catch (IOException e) {
             logger.error(e.getMessage());

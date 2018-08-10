@@ -45,7 +45,14 @@ public class FlowControlFilter extends ZuulFilter {
     }
 
     public boolean shouldFilter() {
-        return true;
+        RequestContext ctx = RequestContext.getCurrentContext();
+        Object object = ctx.get("enableFilter");
+        if(object!=null){
+            Boolean enable=(Boolean)object;
+            return enable;
+        }else{
+            return true;
+        }
     }
 
     @Autowired
@@ -135,7 +142,7 @@ public class FlowControlFilter extends ZuulFilter {
         Boolean isDenialApi = true;
         if(apiConf.size() < 2){
             //isDenialApi = denialOfService(uri, 300, 50);
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"No configuration information for API");
+            sendError(ctx,response,HttpServletResponse.SC_NOT_FOUND,"No configuration information for API");
             return null;
         }else{
             String time = apiConf.get("time").toString();
@@ -147,7 +154,7 @@ public class FlowControlFilter extends ZuulFilter {
         Boolean isDenialUser = true;
         if(userConf.size() < 2){
             //isDenialApi = denialOfService(userName, 300, 50);
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"No configuration information for API");
+            sendError(ctx,response,HttpServletResponse.SC_NOT_FOUND,"No configuration information for API");
             return null;
         }else{
             String time = userConf.get("time").toString();
@@ -155,10 +162,10 @@ public class FlowControlFilter extends ZuulFilter {
             isDenialUser = denialOfService(userName, Integer.parseInt(time), Integer.parseInt(threshold));
         }
         if(isDenialUser || isDenialApi){
-            sendError(ctx,response,HttpServletResponse.SC_BAD_REQUEST,"flow control");
+            sendError(ctx,response,HttpServletResponse.SC_NOT_FOUND,"flow control");
             return null;
         }
-        return true;
+        return null;
     }
 
 
