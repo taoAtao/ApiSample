@@ -30,7 +30,7 @@
     <appender name="async_log" class="ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold>0</discardingThreshold>
         <queueSize>100</queueSize>
-        <appender-ref ref="errorAppender"/>
+        <appender-ref ref="FILE"/>
     </appender>
     <!-- 日志输出级别 -->
     <root level="INFO">
