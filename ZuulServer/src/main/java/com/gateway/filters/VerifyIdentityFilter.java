@@ -54,6 +54,7 @@ public class VerifyIdentityFilter extends ZuulFilter {
             response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Token,DateHeader");
             response.setHeader("Content-Type", "Origin, X-Requested-With, Content-Type, Accept");
             ctx.setSendZuulResponse(false);
+            ctx.set("enableFilter",false);
             return null;
         }
         String dateStr = request.getHeader("DateHeader");
