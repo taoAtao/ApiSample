@@ -6,9 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class ProviderApplication {
+public class AlarmApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProviderApplication.class, args);
+		SpringApplication.run(AlarmApplication.class, args);
 	}
 }
