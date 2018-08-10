@@ -49,7 +49,7 @@ public class RouteExcFilter extends ZuulFilter {
             return null;
         }
         if (cause != null){
-            sendError(ctx, response, HttpServletResponse.SC_BAD_GATEWAY, "该服务不可用");
+            sendError(ctx, response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed To Invoke Backend Service");
         }
         return null;
     }
